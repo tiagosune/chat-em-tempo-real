@@ -21,7 +21,7 @@ public class Servidor {
                     clientSocket.close();
                     continue;
                 }
-                // Teste
+
                 ClientHandler handler = new ClientHandler(clientSocket);
                 clientHandlers.add(handler);
                 pool.execute(handler);
@@ -34,7 +34,6 @@ public class Servidor {
         }
     }
 
-    // Método para broadcast de mensagens para todos os clientes
     public static void broadcast(String message, ClientHandler sender) {
         for (ClientHandler client : clientHandlers) {
             client.sendMessage(message);
@@ -42,7 +41,6 @@ public class Servidor {
         System.out.println("Mensagem broadcast: " + message);
     }
 
-    // Remover cliente da lista
     public static void removeClient(ClientHandler client) {
         clientHandlers.remove(client);
         System.out.println("Cliente desconectado. Total de clientes: " + clientHandlers.size());
@@ -79,7 +77,6 @@ class ClientHandler implements Runnable {
                 Servidor.broadcast(mensagem, this);
             }
         } catch (IOException e) {
-            // Cliente desconectou
         } finally {
             try {
                 socket.close();

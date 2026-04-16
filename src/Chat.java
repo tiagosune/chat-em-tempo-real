@@ -15,12 +15,10 @@ public class Chat extends JFrame {
     private JTextField mensagemField;
     private JButton enviarBtn;
 
-    // Repositório local de usuários (persistido em arquivo)
     private static final String USERS_FILE_NAME = "usuarios.properties";
     private final Properties usuarios = new Properties();
     private Path usuariosPath;
 
-    // Socket de conexão com o servidor
     private Socket socket;
     private BufferedReader in;
     private PrintWriter out;
@@ -95,7 +93,6 @@ public class Chat extends JFrame {
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    // validar login
     private boolean validarLogin(String usuario, String senha) {
         String usuarioNormalizado = normalizarUsuario(usuario);
         if (usuarioNormalizado.isEmpty() || senha == null || senha.isEmpty()) {
@@ -108,7 +105,6 @@ public class Chat extends JFrame {
         }
     }
 
-    // cadastrar o usuário
     private boolean cadastrarUsuario(String usuario, String senha) {
         String usuarioNormalizado = normalizarUsuario(usuario);
         if (usuarioNormalizado.isEmpty() || senha == null || senha.isEmpty()) {
@@ -216,11 +212,10 @@ public class Chat extends JFrame {
 
     private void iniciarConexao() {
         try {
-            socket = new Socket("localhost", 8084); // Conectar ao servidor na porta 12345
+            socket = new Socket("localhost", 8084);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
 
-            // Thread para receber mensagens do servidor
             new Thread(new Runnable() {
                 public void run() {
                     try {
